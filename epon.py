@@ -1,7 +1,7 @@
 # Client Details
-hostname = ""
-username = ""
-password = ""
+hostname = "100.126.255.140"
+username = "flinksupport"
+password = "f@linksupport#"
 import telnetlib
 import time
 import re
@@ -21,7 +21,7 @@ def TelnetSession(host,username,password):
         output = tn.read_until(b">", timeout=5).decode("ascii")
         if "Authentication failed!" in output:
             print("Authentication failed!")
-            return "Authentication failed!"
+            exit(0)
         # Wait for prompt
         time.sleep(1)
         tn.read_until(b">", timeout=5).decode("ascii")
@@ -74,8 +74,6 @@ def clearMAC(tn,interface):
 
 if __name__ == "__main__":
     tn = TelnetSession(hostname,username,password)
-    if "Authentication failed!" in tn:
-        exit(0)
     epon_interfaces = extractEPONPorts(tn)
     for interface in epon_interfaces:
         clearMAC(tn,interface)

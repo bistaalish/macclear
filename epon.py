@@ -19,7 +19,9 @@ def TelnetSession(host,username,password):
         tn.read_until(b"Password: ")
         tn.write(password.encode("ascii") + b"\n")
         output = tn.read_until(b">", timeout=5).decode("ascii")
-        print(output)
+        if "Authentication failed!" in output:
+            print("Authentication failed!")
+            return "Authentication failed!"
         # Wait for prompt
         time.sleep(1)
         tn.read_until(b">", timeout=5).decode("ascii")
@@ -72,6 +74,8 @@ def clearMAC(tn,interface):
 
 if __name__ == "__main__":
     tn = TelnetSession(hostname,username,password)
+    if "Authentication failed!" in tn:
+        exit(0)
     epon_interfaces = extractEPONPorts(tn)
     for interface in epon_interfaces:
         clearMAC(tn,interface)

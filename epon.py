@@ -1,7 +1,7 @@
 # Client Details
-hostname = "100.126.255.140"
-username = "flinksupport"
-password = "f@linksupport#"
+hostname = ""
+username = ""
+password = ""
 import telnetlib
 import time
 import re
